@@ -2,7 +2,7 @@
 
 Waveguide is a fast serializer library for Ruby. It's designed to be partly compatible with ActiveModelSerializers, but much faster:
 
-```ruby
+```shell
 300x Events (8701 objects) (Waveguide)  : 111.56 ms
 300x Events (8701 objects) (AMS)        : 774.62 ms
 ```
