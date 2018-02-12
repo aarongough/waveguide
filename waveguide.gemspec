@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Aaron Gough"]
   spec.email         = ["aaron@aarongough.com"]
 
-  spec.summary       = %q{An ultra-fast serialization library.}
-  spec.description   = %q{An ultra-fast serialization library.}
+  spec.summary       = %q{A fast serialization library for Ruby.}
+  spec.description   = %q{A fast serialization library for Ruby.}
   spec.homepage      = "http://github.com/aarongough/waveguide."
   spec.license       = "MIT"
 
