@@ -6,7 +6,7 @@ RSpec.describe Waveguide do
       context "with #{record_count} leagues" do
         let(:object_count) { 1 + record_count + (record_count * 28) }
 
-        let(:league) do 
+        let(:league) do
           League.new(
             full_name: "National Basketball League",
             slug: "NBA",
@@ -42,11 +42,11 @@ RSpec.describe Waveguide do
 
     def assert_output_structure(hash, record_count)
       # League
-      league = hash
-      expect(league).to have_key(:id)
-      expect(league).to have_key(:full_name)
-      expect(league).to have_key(:slug)
-      expect(league).to have_key(:events)
+      league_hash = hash
+      expect(league_hash).to have_key(:id)
+      expect(league_hash).to have_key(:full_name)
+      expect(league_hash).to have_key(:slug)
+      expect(league_hash).to have_key(:events)
 
       # Event
       event = hash[:events].first

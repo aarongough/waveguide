@@ -11,14 +11,18 @@ class WaveguideCountrySerializer < WaveguideBaseSerializer
 end
 
 class WaveguidePlayerSerializer < WaveguideBaseSerializer
-  has_one :country, serializer: WaveguideCountrySerializer
+  has_one :country
   attributes :first_name, :last_name, :full_name, :birthdate
 
   attribute :full_name do
     "#{object.first_name} #{object.last_name}"
   end
 
-  include? :country do 
+  attribute :country do
+    WaveguideCountrySerializer.new(object.country).as_json
+  end
+
+  include? :country do
     object.respond_to?(:country)
   end
 

@@ -71,7 +71,7 @@ RSpec.describe Waveguide::Serializer do
 
     context "with a block attribute" do
       it "returns a serializable hash" do
-        described_class.attribute :full_name { "#{object.first_name} #{object.last_name}"}
+        described_class.attribute :full_name do "#{object.first_name} #{object.last_name}" end
         expect(described_class.new(test_object).as_json).to eq({ full_name: "Josh Foley" })
       end
     end

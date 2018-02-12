@@ -17,11 +17,11 @@ module Waveguide
 
       self.class.attributes_to_serialize.each do |key|
         output[key] = self.send(key)
-      end 
+      end
 
       self.class.conditional_attributes.each do |key|
         output[key] = self.send(key) if self.send("include_#{key}?")
-      end 
+      end
 
       output
     end
@@ -34,9 +34,9 @@ module Waveguide
 
       def inherited(base)
         super
-        base.attributes_to_serialize = attributes_to_serialize.dup || []
-        base.conditional_attributes = conditional_attributes.dup || []
-        base.serializer_methods = serializer_methods.dup || {}
+        base.attributes_to_serialize = (attributes_to_serialize || []).dup
+        base.conditional_attributes = (conditional_attributes || []).dup
+        base.serializer_methods = (serializer_methods || {}).dup
 
         (self.serializer_methods || {}).each do |key, block|
           base.send(:define_method, key, &block)
@@ -82,20 +82,24 @@ module Waveguide
         end
       end
 
-      def has_one(relation_name, as: nil, serializer:)
+      def has_one(relation_name, as: nil, serializer: nil)
         key = as || relation_name
         add_attribute(key)
-        define_serializer_method(key) do
-          serializer.new(object.send(relation_name)).as_json
+        if serializer
+          define_serializer_method(key) do
+            serializer.new(object.send(relation_name), scope).as_json
+          end
         end
       end
 
-      def has_many(relation_name, as: nil, serializer:)
+      def has_many(relation_name, as: nil, serializer: nil)
         key = as || relation_name
         add_attribute(key)
-        define_serializer_method(key) do
-          object.send(relation_name).map do |item|
-            serializer.new(item).as_json
+        if serializer
+          define_serializer_method(key) do
+            object.send(relation_name).map do |item|
+              serializer.new(item, scope).as_json
+            end
           end
         end
       end
